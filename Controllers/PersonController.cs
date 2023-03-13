@@ -10,24 +10,24 @@ namespace StudentManagement.Controllers
     [Route("api/[controller]")]
     public class PersonController : ControllerBase
     {
-        private List<Person> persons = new List<Person>();
+        private readonly IStudentService _studentService;
 
-        public PersonController()
+        public PersonController(IStudentService studentService)
         {
-            persons.Add(new Person((persons.Count() + 1), "Robert", "robert_amza@yahoo.com", "+40770895664", new Address(persons.Count() + 1, "Romania", "Craiova", "Visinului", 12), PersonType.Student));
-            persons.Add(new Person((persons.Count() + 1), "Robert", "robert_amza@yahoo.com", "+40770895664", new Address(persons.Count() + 1, "Romania", "Craiova", "Visinului", 12), PersonType.Student));
+            _studentService = studentService;
         }
 
         [HttpGet("GetAllPersons")]
         public ActionResult<List<Person>> GetAll()
         {
-            return Ok(persons);
+            return Ok(_studentService.GetAllPersons());
         }
+
 
         [HttpGet("{id}")]
         public ActionResult<Person> GetPersonById(int id)
         {
-            var person = persons.FirstOrDefault(p => p.Id == id);
+            var person = _studentService.GetPersonById(id);
             if (person is null)
             {
                 return NotFound("The person you are looking for was not found");
@@ -38,30 +38,22 @@ namespace StudentManagement.Controllers
         [HttpPost("AddNewPerson")]
         public ActionResult<List<Person>> AddPerson(Person newPerson)
         {
-            persons.Add(newPerson);
-            return Ok(persons);
+
+            return Ok(_studentService.AddNewPerson(newPerson));
         }
 
         [HttpPut("UpdatePerson")]
         public ActionResult<Person> UpdatePerson(Person updatedPerson)
         {
-            var oldPerson = persons.FirstOrDefault(p => p.Id == updatedPerson.Id);
-
-            oldPerson.Name = updatedPerson.Name;
-            oldPerson.Email = updatedPerson.Email;
-            oldPerson.Address = updatedPerson.Address;
-            oldPerson.PhoneNumber = updatedPerson.PhoneNumber;
-            oldPerson.type = updatedPerson.type;
-
-            return Ok(oldPerson);
+            return Ok(_studentService.UpdatePerson(updatedPerson));
         }
 
         [HttpDelete("{id}")]
         public ActionResult<List<Person>> DeletePerson(int id)
         {
-            var person = persons.FirstOrDefault(p => p.Id == id);
-            persons.Remove(person);
-            return Ok(persons);
+
+            return Ok(_studentService.DeletePerson(id));
         }
+
     }
 }
