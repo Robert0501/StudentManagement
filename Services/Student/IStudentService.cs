@@ -7,10 +7,10 @@ namespace StudentManagement.Services.Student
 {
     public interface IStudentService
     {
-        List<Person> GetAllPersons();
-        Person GetPersonById(int id);
-        List<Person> AddNewPerson(Person newPerson);
-        Person UpdatePerson(Person updatedPerson);
-        List<Person> DeletePerson(int id);
+        Task<ServiceResponse<List<Person>>> GetAllPersons();
+        Task<ServiceResponse<Person>> GetPersonById(int id);
+        Task<ServiceResponse<List<Person>>> AddNewPerson(Person newPerson);
+        Task<ServiceResponse<Person>> UpdatePerson(Person updatedPerson);
+        Task<ServiceResponse<List<Person>>> DeletePerson(int id);
     }
 }

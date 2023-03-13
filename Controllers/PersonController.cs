@@ -18,41 +18,52 @@ namespace StudentManagement.Controllers
         }
 
         [HttpGet("GetAllPersons")]
-        public ActionResult<List<Person>> GetAll()
+        public async Task<ActionResult<ServiceResponse<List<Person>>>> GetAll()
         {
-            return Ok(_studentService.GetAllPersons());
+            var response = await _studentService.GetAllPersons();
+            if (response.Data is null)
+            {
+                return NotFound(response);
+            }
+            return Ok(response);
         }
 
 
         [HttpGet("{id}")]
-        public ActionResult<Person> GetPersonById(int id)
+        public async Task<ActionResult<ServiceResponse<Person>>> GetPersonById(int id)
         {
-            var person = _studentService.GetPersonById(id);
-            if (person is null)
+
+            var response = await _studentService.GetPersonById(id);
+            if (response.Data is null)
             {
                 return NotFound("The person you are looking for was not found");
             }
-            return Ok(person);
+            return Ok(response);
         }
 
         [HttpPost("AddNewPerson")]
-        public ActionResult<List<Person>> AddPerson(Person newPerson)
+        public async Task<ActionResult<ServiceResponse<List<Person>>>> AddPerson(Person newPerson)
         {
-
-            return Ok(_studentService.AddNewPerson(newPerson));
+            var response = await _studentService.AddNewPerson(newPerson);
+            return Ok(response);
         }
 
         [HttpPut("UpdatePerson")]
-        public ActionResult<Person> UpdatePerson(Person updatedPerson)
+        public async Task<ActionResult<ServiceResponse<Person>>> UpdatePerson(Person updatedPerson)
         {
-            return Ok(_studentService.UpdatePerson(updatedPerson));
+            var response = await _studentService.UpdatePerson(updatedPerson);
+            return Ok(response);
         }
 
         [HttpDelete("{id}")]
-        public ActionResult<List<Person>> DeletePerson(int id)
+        public async Task<ActionResult<List<Person>>> DeletePerson(int id)
         {
-
-            return Ok(_studentService.DeletePerson(id));
+            var response = await _studentService.DeletePerson(id);
+            if (!response.Success)
+            {
+                return NotFound(response);
+            }
+            return Ok(response);
         }
 
     }
