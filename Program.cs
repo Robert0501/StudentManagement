@@ -1,4 +1,7 @@
 global using StudentManagement.Enums;
+global using StudentManagement.Models;
+
+global using Microsoft.AspNetCore.Mvc;
 
 var builder = WebApplication.CreateBuilder(args);
 

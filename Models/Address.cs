@@ -12,5 +12,14 @@ namespace StudentManagement.Models
         public string City { get; set; }
         public string Street { get; set; }
         public int Number { get; set; }
+
+        public Address(int personId, string country, string city, string street, int number)
+        {
+            this.PersonId = personId;
+            this.Country = country;
+            this.City = city;
+            this.Street = street;
+            this.Number = number;
+        }
     }
 }

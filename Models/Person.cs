@@ -14,5 +14,15 @@ namespace StudentManagement.Models
         public string PhoneNumber { get; set; }
         public Address Address { get; set; }
         public PersonType type { get; set; }
+
+        public Person(int id, string name, string email, string phoneNumber, Address address, PersonType type)
+        {
+            this.Id = id;
+            this.Name = name;
+            this.Email = email;
+            this.PhoneNumber = phoneNumber;
+            this.Address = address;
+            this.type = type;
+        }
     }
 }
