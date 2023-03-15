@@ -14,13 +14,18 @@ namespace StudentManagement.Models
         public string City { get; set; }
         public string Street { get; set; }
         public int Number { get; set; }
-
+   
         public Address(string country, string city, string street, int number)
         {
             this.Country = country;
             this.City = city;
             this.Street = street;
             this.Number = number;
+        }
+
+        public static implicit operator Address(List<Address> v)
+        {
+            throw new NotImplementedException();
         }
     }
 }
