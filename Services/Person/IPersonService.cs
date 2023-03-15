@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace StudentManagement.Services.Student
 {
-    public interface IStudentService
+    public interface IPersonService
     {
         Task<ServiceResponse<List<Person>>> GetAllPersons();
         Task<ServiceResponse<Person>> GetPersonById(int id);

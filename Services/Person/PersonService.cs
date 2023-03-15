@@ -6,11 +6,11 @@ using System.Threading.Tasks;
 
 namespace StudentManagement.Services
 {
-    public class StudentService : IStudentService
+    public class PersonService : IPersonService
     {
         private readonly DataContext _context;
 
-        public StudentService(DataContext context)
+        public PersonService(DataContext context)
         {
             _context = context;
         }
@@ -30,7 +30,7 @@ namespace StudentManagement.Services
         public async Task<ServiceResponse<Person>> GetPersonById(int id)
         {
             var serviceResponse = new ServiceResponse<Person>();
-            serviceResponse.Data = await _context.Person.FirstOrDefaultAsync(p => p.Id == id);
+            serviceResponse.Data = await _context.Person.FirstOrDefaultAsync(p => p.PersonId == id);
             if (serviceResponse.Data is null)
             {
                 serviceResponse.Success = false;
@@ -51,16 +51,17 @@ namespace StudentManagement.Services
         public async Task<ServiceResponse<Person>> UpdatePerson(Person updatedPerson)
         {
             var serviceResponse = new ServiceResponse<Person>();
-            var newPerson = await _context.Person.FirstOrDefaultAsync(p => p.Id == updatedPerson.Id);
+            var newPerson = await _context.Person.FirstOrDefaultAsync(p => p.PersonId == updatedPerson.PersonId);
 
             if (newPerson is null)
             {
-                throw new Exception($"Person with ID '{updatedPerson.Id}' not found");
+                throw new Exception($"Person with ID '{updatedPerson.PersonId}' not found");
             }
 
             newPerson.Name = updatedPerson.Name;
             newPerson.Email = updatedPerson.Email;
             newPerson.PhoneNumber = updatedPerson.PhoneNumber;
+            newPerson.Address = updatedPerson.Address;
             newPerson.type = updatedPerson.type;
 
             await _context.SaveChangesAsync();
@@ -73,7 +74,7 @@ namespace StudentManagement.Services
         public async Task<ServiceResponse<List<Person>>> DeletePerson(int id)
         {
             var serviceResponse = new ServiceResponse<List<Person>>();
-            var deletedPerson = await _context.Person.FirstOrDefaultAsync(p => p.Id == id);
+            var deletedPerson = await _context.Person.FirstOrDefaultAsync(p => p.PersonId == id);
             serviceResponse.Data = await _context.Person.ToListAsync();
 
             if (deletedPerson is null)
