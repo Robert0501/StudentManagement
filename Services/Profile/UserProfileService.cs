@@ -3,11 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
+
 namespace StudentManagement.Services.Profile
 {
     public class UserProfileService : IUserProfileService
     {
-
+        RegularExpression expression = new RegularExpression();
         private readonly DataContext _context;
         private readonly IMapper _mapper;
 
@@ -49,11 +50,24 @@ namespace StudentManagement.Services.Profile
         public async Task<ServiceResponse<List<GetUserProfileDTO>>> AddNewProfile(AddUserProfileDTO newProfile)
         {
             var serviceResponse = new ServiceResponse<List<GetUserProfileDTO>>();
-            _context.Add(_mapper.Map<UserProfile>(newProfile));
-            await _context.SaveChangesAsync();
+            if (!expression.isMatch(newProfile.email, expression.Email))
+            {
+                serviceResponse.Success = false;
+                serviceResponse.Message = "Please insert a valid email";
+            }
+            else if (!expression.isMatch(newProfile.password, expression.Password))
+            {
+                serviceResponse.Success = false;
+                serviceResponse.Message = "Your password is not strong enough";
+            }
+            else
+            {
+                _context.Add(_mapper.Map<UserProfile>(newProfile));
+                await _context.SaveChangesAsync();
 
-            var dbUsers = await _context.UserProfile.ToListAsync();
-            serviceResponse.Data = dbUsers.Select(u => _mapper.Map<GetUserProfileDTO>(u)).ToList();
+                var dbUsers = await _context.UserProfile.ToListAsync();
+                serviceResponse.Data = dbUsers.Select(u => _mapper.Map<GetUserProfileDTO>(u)).ToList();
+            }
 
             return serviceResponse;
         }

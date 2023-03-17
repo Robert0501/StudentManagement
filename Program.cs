@@ -1,11 +1,12 @@
 global using StudentManagement.Enums;
 global using StudentManagement.Models;
 
+global using StudentManagement.RegEX;
+global using StudentManagement.Data;
+
 global using StudentManagement.Services;
 global using StudentManagement.Services.Student;
 global using StudentManagement.Services.Profile;
-
-global using StudentManagement.Data;
 
 global using StudentManagement.DTOs.UserProfileDTO;
 
@@ -14,8 +15,11 @@ global using Microsoft.EntityFrameworkCore;
 
 global using System.ComponentModel.DataAnnotations.Schema;
 global using System.ComponentModel;
+global using System.Text.RegularExpressions;
+
 
 global using AutoMapper;
+
 
 var builder = WebApplication.CreateBuilder(args);
 

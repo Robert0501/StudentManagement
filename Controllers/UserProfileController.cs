@@ -39,18 +39,18 @@ namespace StudentManagement.Controllers
             return Ok(response);
         }
 
-        [HttpPost("AddNewProfile")]
+        [HttpPost("CreateAccount")]
         public async Task<ActionResult<ServiceResponse<List<GetUserProfileDTO>>>> AddNewProfile(AddUserProfileDTO newProfile)
         {
             var response = await _userProfileService.AddNewProfile(newProfile);
             if (response.Success is false)
             {
-                return NotFound(response);
+                return BadRequest(response);
             }
             return Ok(response);
         }
 
-        [HttpPut("UpdateProfile")]
+        [HttpPut("ChangePassowrd")]
         public async Task<ActionResult<GetUserProfileDTO>> UpdateProfile(UpdateUserProfieDTO updatedProfile)
         {
             var response = await _userProfileService.UpdateProfile(updatedProfile);
@@ -61,7 +61,7 @@ namespace StudentManagement.Controllers
             return Ok(response);
         }
 
-        [HttpDelete("{id}")]
+        [HttpDelete("DeleteAccount/{id}")]
         public async Task<ActionResult<List<GetUserProfileDTO>>> DeleteProfile(int id)
         {
             var response = await _userProfileService.DeleteUser(id);
