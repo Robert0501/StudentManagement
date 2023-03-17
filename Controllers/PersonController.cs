@@ -56,7 +56,7 @@ namespace StudentManagement.Controllers
         }
 
         [HttpDelete("{id}")]
-        public async Task<ActionResult<List<Person>>> DeletePerson(int id)
+        public async Task<ActionResult<ServiceResponse<List<Person>>>> DeletePerson(int id)
         {
             var response = await _studentService.DeletePerson(id);
             if (!response.Success)
