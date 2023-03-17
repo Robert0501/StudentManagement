@@ -15,5 +15,6 @@ namespace StudentManagement.Data
 
         public DbSet<Person> Person => Set<Person>();
         public DbSet<Address> Address => Set<Address>();
+        public DbSet<UserProfile> UserProfile => Set<UserProfile>();
     }
 }
