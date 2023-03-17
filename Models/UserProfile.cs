@@ -16,8 +16,14 @@ namespace StudentManagement.Models
         public bool IsActive { get; set; } = false;
         [DefaultValue("false")]
         public bool IsDeleted { get; set; } = false;
+        [DefaultValue(1)]
         public PersonType Type { get; set; } = PersonType.Student;
 
+        public UserProfile(String email, String password)
+        {
+            this.Email = email;
+            this.Password = password;
+        }
         public UserProfile(string email, string password, bool isActive, bool IsDeleted, PersonType type)
         {
             this.Email = email;

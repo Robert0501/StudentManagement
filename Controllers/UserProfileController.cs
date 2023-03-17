@@ -18,7 +18,7 @@ namespace StudentManagement.Controllers
         }
 
         [HttpGet("GetAllUsers")]
-        public async Task<ActionResult<ServiceResponse<List<UserProfile>>>> GetAllUsers()
+        public async Task<ActionResult<ServiceResponse<List<GetUserProfileDTO>>>> GetAllUsers()
         {
             var response = await _userProfileService.GetAllUsers();
             if (response.Success is false)
@@ -29,7 +29,7 @@ namespace StudentManagement.Controllers
         }
 
         [HttpGet("{id}")]
-        public async Task<ActionResult<ServiceResponse<UserProfile>>> GetUserById(int id)
+        public async Task<ActionResult<ServiceResponse<GetUserProfileDTO>>> GetUserById(int id)
         {
             var response = await _userProfileService.GetUserById(id);
             if (response.Success is false)
@@ -40,7 +40,7 @@ namespace StudentManagement.Controllers
         }
 
         [HttpPost("AddNewProfile")]
-        public async Task<ActionResult<ServiceResponse<List<UserProfile>>>> AddNewProfile(UserProfile newProfile)
+        public async Task<ActionResult<ServiceResponse<List<GetUserProfileDTO>>>> AddNewProfile(AddUserProfileDTO newProfile)
         {
             var response = await _userProfileService.AddNewProfile(newProfile);
             if (response.Success is false)
@@ -51,7 +51,7 @@ namespace StudentManagement.Controllers
         }
 
         [HttpPut("UpdateProfile")]
-        public async Task<ActionResult<UserProfile>> UpdateProfile(UserProfile updatedProfile)
+        public async Task<ActionResult<GetUserProfileDTO>> UpdateProfile(UpdateUserProfieDTO updatedProfile)
         {
             var response = await _userProfileService.UpdateProfile(updatedProfile);
             if (response.Success is false)
@@ -62,7 +62,7 @@ namespace StudentManagement.Controllers
         }
 
         [HttpDelete("{id}")]
-        public async Task<ActionResult<List<UserProfile>>> DeleteProfile(int id)
+        public async Task<ActionResult<List<GetUserProfileDTO>>> DeleteProfile(int id)
         {
             var response = await _userProfileService.DeleteUser(id);
             if (response.Success is false)
