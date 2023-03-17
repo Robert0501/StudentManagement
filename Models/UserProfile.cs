@@ -19,6 +19,13 @@ namespace StudentManagement.Models
         [DefaultValue(1)]
         public PersonType Type { get; set; } = PersonType.Student;
 
+        [ForeignKey("UserTokenId")]
+        public virtual UserToken? userToken { get; set; }
+
+        public UserProfile()
+        {
+
+        }
         public UserProfile(String email, String password)
         {
             this.Email = email;

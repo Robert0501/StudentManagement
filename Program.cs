@@ -7,6 +7,7 @@ global using StudentManagement.Data;
 global using StudentManagement.Services;
 global using StudentManagement.Services.Student;
 global using StudentManagement.Services.Profile;
+global using StudentManagement.Services.Token;
 
 global using StudentManagement.DTOs.UserProfileDTO;
 
@@ -34,6 +35,7 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddAutoMapper(typeof(Program).Assembly);
 builder.Services.AddScoped<IPersonService, PersonService>();
 builder.Services.AddScoped<IUserProfileService, UserProfileService>();
+builder.Services.AddScoped<IUserTokenService, UserTokenService>();
 
 var app = builder.Build();
 

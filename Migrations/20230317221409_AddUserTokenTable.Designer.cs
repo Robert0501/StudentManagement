@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using StudentManagement.Data;
 
@@ -11,9 +12,11 @@ using StudentManagement.Data;
 namespace StudentManagement.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20230317221409_AddUserTokenTable")]
+    partial class AddUserTokenTable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -108,30 +111,9 @@ namespace StudentManagement.Migrations
                     b.Property<int>("Type")
                         .HasColumnType("int");
 
-                    b.Property<int?>("UserTokenId")
-                        .HasColumnType("int");
-
                     b.HasKey("UserProfileId");
 
-                    b.HasIndex("UserTokenId");
-
                     b.ToTable("UserProfile");
-                });
-
-            modelBuilder.Entity("StudentManagement.Models.UserToken", b =>
-                {
-                    b.Property<int>("UserTokenId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("UserTokenId"));
-
-                    b.Property<int>("Token")
-                        .HasColumnType("int");
-
-                    b.HasKey("UserTokenId");
-
-                    b.ToTable("UserToken");
                 });
 
             modelBuilder.Entity("StudentManagement.Models.Person", b =>
@@ -141,15 +123,6 @@ namespace StudentManagement.Migrations
                         .HasForeignKey("AddressId");
 
                     b.Navigation("Address");
-                });
-
-            modelBuilder.Entity("StudentManagement.Models.UserProfile", b =>
-                {
-                    b.HasOne("StudentManagement.Models.UserToken", "userToken")
-                        .WithMany()
-                        .HasForeignKey("UserTokenId");
-
-                    b.Navigation("userToken");
                 });
 #pragma warning restore 612, 618
         }

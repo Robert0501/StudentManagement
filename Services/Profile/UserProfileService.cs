@@ -11,11 +11,13 @@ namespace StudentManagement.Services.Profile
         RegularExpression expression = new RegularExpression();
         private readonly DataContext _context;
         private readonly IMapper _mapper;
+        private readonly IUserTokenService _userTokenService;
 
-        public UserProfileService(IMapper mapper, DataContext context)
+        public UserProfileService(IMapper mapper, DataContext context, IUserTokenService userTokenService)
         {
             _mapper = mapper;
             _context = context;
+            _userTokenService = userTokenService;
         }
 
         public async Task<ServiceResponse<List<GetUserProfileDTO>>> GetAllUsers()
@@ -36,7 +38,7 @@ namespace StudentManagement.Services.Profile
         public async Task<ServiceResponse<GetUserProfileDTO>> GetUserById(int id)
         {
             var serviceResponse = new ServiceResponse<GetUserProfileDTO>();
-            var dbUser = await _context.UserProfile.FirstOrDefaultAsync(u => u.UserProfileId == id);
+            var dbUser = await _context.UserProfile.Include(t => t.userToken).FirstOrDefaultAsync(u => u.UserProfileId == id);
             serviceResponse.Data = _mapper.Map<GetUserProfileDTO>(dbUser);
 
             if (serviceResponse.Data is null)
@@ -62,10 +64,11 @@ namespace StudentManagement.Services.Profile
             }
             else
             {
+                newProfile.userToken.Token = _userTokenService.GenerateToken();
                 _context.Add(_mapper.Map<UserProfile>(newProfile));
                 await _context.SaveChangesAsync();
 
-                var dbUsers = await _context.UserProfile.ToListAsync();
+                var dbUsers = await _context.UserProfile.Include(t => t.userToken).ToListAsync();
                 serviceResponse.Data = dbUsers.Select(u => _mapper.Map<GetUserProfileDTO>(u)).ToList();
             }
 
@@ -113,6 +116,28 @@ namespace StudentManagement.Services.Profile
 
             return serviceResponse;
         }
+
+        public async Task<ServiceResponse<UserProfile>> ActivateAccount(int userProfileId, int insertedToken)
+        {
+            var profile = new UserProfile();
+            var serviceResponse = new ServiceResponse<UserProfile>();
+            profile = await _context.UserProfile.Include(t => t.userToken).FirstOrDefaultAsync(p => p.UserProfileId == userProfileId);
+            if (profile.userToken.Token == insertedToken)
+            {
+                profile.IsActive = true;
+                serviceResponse.Data = profile;
+                await _context.SaveChangesAsync();
+
+                return serviceResponse;
+            }
+            else
+            {
+                serviceResponse.Success = false;
+                serviceResponse.Message = "The codes are not identical";
+                return serviceResponse;
+            }
+        }
+
 
 
     }

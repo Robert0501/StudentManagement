@@ -16,5 +16,6 @@ namespace StudentManagement.DTOs.UserProfileDTO
         public bool IsDeleted { get; set; } = false;
         [DefaultValue(1)]
         public PersonType Type { get; set; } = PersonType.Student;
+        public virtual UserToken? userToken { get; set; }
     }
 }

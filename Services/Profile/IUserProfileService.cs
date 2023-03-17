@@ -12,5 +12,6 @@ namespace StudentManagement.Services.Profile
         Task<ServiceResponse<List<GetUserProfileDTO>>> AddNewProfile(AddUserProfileDTO newProfile);
         Task<ServiceResponse<GetUserProfileDTO>> UpdateProfile(UpdateUserProfieDTO updatedProfile);
         Task<ServiceResponse<List<GetUserProfileDTO>>> DeleteUser(int id);
+        Task<ServiceResponse<UserProfile>> ActivateAccount(int userProfileId, int insertedToken);
     }
 }

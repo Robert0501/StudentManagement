@@ -72,5 +72,12 @@ namespace StudentManagement.Controllers
             return Ok(response);
         }
 
+        [HttpPut("ActivateAccount")]
+        public async Task<ActionResult<ServiceResponse<UserProfile>>> ActivateAccount(int userProfileId, int insertedToken)
+        {
+            var response = await _userProfileService.ActivateAccount(userProfileId, insertedToken);
+            return Ok(response);
+        }
+
     }
 }

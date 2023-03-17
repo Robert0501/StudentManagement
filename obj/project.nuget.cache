@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "3PAqiEQrMCyMS9I8G+fp+4r8n8RRusLRAOQ33AQnJUAuukBPtyo2LmLSFtN6mDykgo0wFZAMCUkr0EuvdBJvmg==",
+  "dgSpecHash": "T6nCnzwdQ8JMm1IshF/If1z7aG/lOP/p6m6Rlja3YAa/yQUif2NIY6JiZw9HShrAzAveXEwzxm/kIk1p/eNaaw==",
   "success": true,
-  "projectFilePath": "E:\\Programare\\WebApps\\StudentManagement\\StudentManagement\\StudentManagement.csproj",
+  "projectFilePath": "E:\\Programare\\WebApps\\StudentManagement\\StudentManagement\\StudentManagement-1\\StudentManagement.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\rober\\.nuget\\packages\\automapper\\12.0.0\\automapper.12.0.0.nupkg.sha512",
     "C:\\Users\\rober\\.nuget\\packages\\automapper.extensions.microsoft.dependencyinjection\\12.0.0\\automapper.extensions.microsoft.dependencyinjection.12.0.0.nupkg.sha512",

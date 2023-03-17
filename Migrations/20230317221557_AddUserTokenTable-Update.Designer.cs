@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using StudentManagement.Data;
 
@@ -11,9 +12,11 @@ using StudentManagement.Data;
 namespace StudentManagement.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20230317221557_AddUserTokenTable-Update")]
+    partial class AddUserTokenTableUpdate
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -108,12 +111,7 @@ namespace StudentManagement.Migrations
                     b.Property<int>("Type")
                         .HasColumnType("int");
 
-                    b.Property<int?>("UserTokenId")
-                        .HasColumnType("int");
-
                     b.HasKey("UserProfileId");
-
-                    b.HasIndex("UserTokenId");
 
                     b.ToTable("UserProfile");
                 });
@@ -129,7 +127,12 @@ namespace StudentManagement.Migrations
                     b.Property<int>("Token")
                         .HasColumnType("int");
 
+                    b.Property<int?>("UserProfileId")
+                        .HasColumnType("int");
+
                     b.HasKey("UserTokenId");
+
+                    b.HasIndex("UserProfileId");
 
                     b.ToTable("UserToken");
                 });
@@ -143,13 +146,13 @@ namespace StudentManagement.Migrations
                     b.Navigation("Address");
                 });
 
-            modelBuilder.Entity("StudentManagement.Models.UserProfile", b =>
+            modelBuilder.Entity("StudentManagement.Models.UserToken", b =>
                 {
-                    b.HasOne("StudentManagement.Models.UserToken", "userToken")
+                    b.HasOne("StudentManagement.Models.UserProfile", "userProfile")
                         .WithMany()
-                        .HasForeignKey("UserTokenId");
+                        .HasForeignKey("UserProfileId");
 
-                    b.Navigation("userToken");
+                    b.Navigation("userProfile");
                 });
 #pragma warning restore 612, 618
         }

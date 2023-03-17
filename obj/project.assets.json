@@ -3977,11 +3977,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "E:\\Programare\\WebApps\\StudentManagement\\StudentManagement\\StudentManagement.csproj",
+      "projectUniqueName": "E:\\Programare\\WebApps\\StudentManagement\\StudentManagement\\StudentManagement-1\\StudentManagement.csproj",
       "projectName": "StudentManagement",
-      "projectPath": "E:\\Programare\\WebApps\\StudentManagement\\StudentManagement\\StudentManagement.csproj",
+      "projectPath": "E:\\Programare\\WebApps\\StudentManagement\\StudentManagement\\StudentManagement-1\\StudentManagement.csproj",
       "packagesPath": "C:\\Users\\rober\\.nuget\\packages\\",
-      "outputPath": "E:\\Programare\\WebApps\\StudentManagement\\StudentManagement\\obj\\",
+      "outputPath": "E:\\Programare\\WebApps\\StudentManagement\\StudentManagement\\StudentManagement-1\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\rober\\AppData\\Roaming\\NuGet\\NuGet.Config",
