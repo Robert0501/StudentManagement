@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
+
+
 namespace StudentManagement.Models
 {
     public class UserProfile
@@ -10,16 +12,18 @@ namespace StudentManagement.Models
         public int UserProfileId { get; set; }
         public string Email { get; set; }
         public string Password { get; set; }
+        [DefaultValue("false")]
         public bool IsActive { get; set; } = false;
+        [DefaultValue("false")]
         public bool IsDeleted { get; set; } = false;
         public PersonType Type { get; set; } = PersonType.Student;
 
-        public UserProfile(string email, string password, PersonType type)
+        public UserProfile(string email, string password, bool isActive, bool IsDeleted, PersonType type)
         {
             this.Email = email;
             this.Password = password;
-            this.IsActive = false;
-            this.IsDeleted = false;
+            this.IsActive = isActive;
+            this.IsDeleted = IsDeleted;
             this.Type = type;
         }
     }

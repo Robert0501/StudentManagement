@@ -7,10 +7,10 @@ namespace StudentManagement.Services.Profile
 {
     public interface IUserProfileService
     {
-        List<UserProfile> GetAllUsers();
-        UserProfile GetUserById(int id);
-        List<UserProfile> AddNewProfile(UserProfile newProfile);
-        UserProfile UpdateProfile(UserProfile updatedProfile);
-        public List<UserProfile> DeleteUser(int id);
+        Task<ServiceResponse<List<UserProfile>>> GetAllUsers();
+        Task<ServiceResponse<UserProfile>> GetUserById(int id);
+        Task<ServiceResponse<List<UserProfile>>> AddNewProfile(UserProfile newProfile);
+        Task<ServiceResponse<UserProfile>> UpdateProfile(UserProfile updatedProfile);
+        Task<ServiceResponse<List<UserProfile>>> DeleteUser(int id);
     }
 }

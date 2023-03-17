@@ -17,40 +17,59 @@ namespace StudentManagement.Controllers
             _userProfileService = userProfileService;
         }
 
-
-
         [HttpGet("GetAllUsers")]
-        public ActionResult<List<UserProfile>> GetAllUsers()
+        public async Task<ActionResult<ServiceResponse<List<UserProfile>>>> GetAllUsers()
         {
-            return Ok(_userProfileService.GetAllUsers());
+            var response = await _userProfileService.GetAllUsers();
+            if (response.Success is false)
+            {
+                return NotFound(response);
+            }
+            return Ok(response);
         }
 
         [HttpGet("{id}")]
-        public ActionResult<UserProfile> GetUserById(int id)
+        public async Task<ActionResult<ServiceResponse<UserProfile>>> GetUserById(int id)
         {
-
-            return Ok(_userProfileService.GetUserById(id));
+            var response = await _userProfileService.GetUserById(id);
+            if (response.Success is false)
+            {
+                return NotFound(response);
+            }
+            return Ok(response);
         }
 
         [HttpPost("AddNewProfile")]
-        public ActionResult<List<UserProfile>> AddNewProfile(UserProfile newProfile)
+        public async Task<ActionResult<ServiceResponse<List<UserProfile>>>> AddNewProfile(UserProfile newProfile)
         {
-            return Ok(_userProfileService.AddNewProfile(newProfile));
+            var response = await _userProfileService.AddNewProfile(newProfile);
+            if (response.Success is false)
+            {
+                return NotFound(response);
+            }
+            return Ok(response);
         }
 
         [HttpPut("UpdateProfile")]
-        public ActionResult<UserProfile> UpdateProfile(UserProfile updatedProfile)
+        public async Task<ActionResult<UserProfile>> UpdateProfile(UserProfile updatedProfile)
         {
-
-            return Ok(_userProfileService.UpdateProfile(updatedProfile));
+            var response = await _userProfileService.UpdateProfile(updatedProfile);
+            if (response.Success is false)
+            {
+                return NotFound(response);
+            }
+            return Ok(response);
         }
 
         [HttpDelete("{id}")]
-        public ActionResult<List<UserProfile>> DeleteProfile(int id)
+        public async Task<ActionResult<List<UserProfile>>> DeleteProfile(int id)
         {
-
-
-            return Ok(_userProfileService.DeleteUser(id));
+            var response = await _userProfileService.DeleteUser(id);
+            if (response.Success is false)
+            {
+                return NotFound(response);
+            }
+            return Ok(response);
         }
 
     }

@@ -7,40 +7,90 @@ namespace StudentManagement.Services.Profile
 {
     public class UserProfileService : IUserProfileService
     {
-        private static List<UserProfile> users = new List<UserProfile>
-        {
-            new UserProfile("rob@gmail.com", "rob", PersonType.Student)
-        };
 
-        public List<UserProfile> GetAllUsers()
+        private readonly DataContext _context;
+
+        public UserProfileService(DataContext context)
         {
-            return users;
+            _context = context;
         }
 
-        public UserProfile GetUserById(int id)
+        public async Task<ServiceResponse<List<UserProfile>>> GetAllUsers()
         {
-            var user = users.FirstOrDefault(u => u.UserProfileId == id);
-            return user;
-        }
-        public List<UserProfile> AddNewProfile(UserProfile newProfile)
-        {
-            users.Add(newProfile);
-            return users;
-        }
-        public UserProfile UpdateProfile(UserProfile updatedProfile)
-        {
-            var user = users.FirstOrDefault(u => u.UserProfileId == updatedProfile.UserProfileId);
+            var serviceResponse = new ServiceResponse<List<UserProfile>>();
+            serviceResponse.Data = await _context.UserProfile.ToListAsync();
 
-            user.Email = updatedProfile.Email;
-            user.Password = updatedProfile.Password;
+            if (serviceResponse.Data is null)
+            {
+                serviceResponse.Success = false;
+                serviceResponse.Message = "There are no users";
+            }
 
-            return user;
+            return serviceResponse;
         }
-        public List<UserProfile> DeleteUser(int id)
+
+        public async Task<ServiceResponse<UserProfile>> GetUserById(int id)
         {
-            var user = users.FirstOrDefault(u => u.UserProfileId == id);
-            users.Remove(user);
-            return users;
+            var serviceResponse = new ServiceResponse<UserProfile>();
+            serviceResponse.Data = await _context.UserProfile.FirstOrDefaultAsync(u => u.UserProfileId == id);
+
+            if (serviceResponse.Data is null)
+            {
+                serviceResponse.Success = false;
+                serviceResponse.Message = "The user with id = " + id + " does not exist";
+            }
+
+            return serviceResponse;
+        }
+        public async Task<ServiceResponse<List<UserProfile>>> AddNewProfile(UserProfile newProfile)
+        {
+            _context.UserProfile.Add(newProfile);
+            await _context.SaveChangesAsync();
+            var serviceResponse = new ServiceResponse<List<UserProfile>>();
+            serviceResponse.Data = await _context.UserProfile.ToListAsync();
+
+            return serviceResponse;
+        }
+        public async Task<ServiceResponse<UserProfile>> UpdateProfile(UserProfile updatedProfile)
+        {
+            var serviceResponse = new ServiceResponse<UserProfile>();
+            var user = await _context.UserProfile.FirstOrDefaultAsync(u => u.UserProfileId == updatedProfile.UserProfileId);
+
+            if (user is null)
+            {
+                serviceResponse.Success = false;
+                serviceResponse.Message = "The user with id = " + updatedProfile.UserProfileId + " does not exist";
+            }
+            else
+            {
+                user.Email = updatedProfile.Email;
+                user.Password = updatedProfile.Password;
+
+                await _context.SaveChangesAsync();
+
+                serviceResponse.Data = user;
+            }
+
+            return serviceResponse;
+        }
+        public async Task<ServiceResponse<List<UserProfile>>> DeleteUser(int id)
+        {
+            var serviceResponse = new ServiceResponse<List<UserProfile>>();
+            var user = await _context.UserProfile.FirstOrDefaultAsync(u => u.UserProfileId == id);
+
+            if (user is null)
+            {
+                serviceResponse.Success = false;
+                serviceResponse.Message = "The user with id = " + id + " does not exist";
+            }
+            else
+            {
+                _context.UserProfile.Remove(user);
+                await _context.SaveChangesAsync();
+                serviceResponse.Data = await _context.UserProfile.ToListAsync();
+            }
+
+            return serviceResponse;
         }
 
 
