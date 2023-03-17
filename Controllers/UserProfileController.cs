@@ -3,56 +3,54 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
+
 namespace StudentManagement.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
     public class UserProfileController : ControllerBase
     {
+        private readonly IUserProfileService _userProfileService;
 
-        private static List<UserProfile> users = new List<UserProfile>
+        public UserProfileController(IUserProfileService userProfileService)
         {
-            new UserProfile("rob@gmail.com", "rob", PersonType.Student)
-        };
+            _userProfileService = userProfileService;
+        }
+
+
 
         [HttpGet("GetAllUsers")]
         public ActionResult<List<UserProfile>> GetAllUsers()
         {
-            return Ok(users);
+            return Ok(_userProfileService.GetAllUsers());
         }
 
         [HttpGet("{id}")]
         public ActionResult<UserProfile> GetUserById(int id)
         {
-            var user = users.FirstOrDefault(u => u.UserProfileId == id);
-            return Ok(user);
+
+            return Ok(_userProfileService.GetUserById(id));
         }
 
         [HttpPost("AddNewProfile")]
         public ActionResult<List<UserProfile>> AddNewProfile(UserProfile newProfile)
         {
-            users.Add(newProfile);
-            return Ok(users);
+            return Ok(_userProfileService.AddNewProfile(newProfile));
         }
 
         [HttpPut("UpdateProfile")]
         public ActionResult<UserProfile> UpdateProfile(UserProfile updatedProfile)
         {
-            var user = users.FirstOrDefault(u => u.UserProfileId == updatedProfile.UserProfileId);
 
-            user.Email = updatedProfile.Email;
-            user.Password = updatedProfile.Password;
-
-            return Ok(user);
+            return Ok(_userProfileService.UpdateProfile(updatedProfile));
         }
 
         [HttpDelete("{id}")]
         public ActionResult<List<UserProfile>> DeleteProfile(int id)
         {
-            var user = users.FirstOrDefault(u => u.UserProfileId == id);
-            users.Remove(user);
 
-            return Ok(users);
+
+            return Ok(_userProfileService.DeleteUser(id));
         }
 
     }

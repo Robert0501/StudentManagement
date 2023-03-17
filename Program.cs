@@ -1,7 +1,11 @@
 global using StudentManagement.Enums;
+
 global using StudentManagement.Models;
+
 global using StudentManagement.Services;
 global using StudentManagement.Services.Student;
+global using StudentManagement.Services.Profile;
+
 global using StudentManagement.Data;
 
 global using Microsoft.AspNetCore.Mvc;
@@ -21,6 +25,7 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddScoped<IPersonService, PersonService>();
+builder.Services.AddScoped<IUserProfileService, UserProfileService>();
 
 var app = builder.Build();
 
