@@ -8,6 +8,6 @@ namespace StudentManagement.DTOs.UserProfileDTO
     public class UpdateUserProfieDTO
     {
         public int UserProfileId { get; set; }
-        public string Password { get; set; }
+        public string? Password { get; set; }
     }
 }
